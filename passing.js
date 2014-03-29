@@ -80,19 +80,42 @@ var blitzers = [5]; //This is the defensive id of any blitzers.
 //This determines the amount of pressure a defensive player places on the QB at a given time.
 var pressure = new Array();
 var openness = new Array();
+var sacklimit;
+var preslimit;
 function time(defplayerid,snaptime)
 {
 var offplayerid = defplayerid;
-var presfactor = 25;
-var pressure[defplayerid] = snaptime*pow(2,(defplayer[defplayerid][1]-offplayer[offplayerid][1])/presfactor)
+var presfactor = 60;
+var presrand = .25;
+sacklimit = 3;
+preslimit = 2.5;
+var press = snaptime*Math.pow(2,(((defplayer[defplayerid][1][0]-offplayer[offplayerid][1][0])+(Math.random()-.5)*Math.pow(2,-(defplayer[defplayerid][1][3]-offplayer[offplayerid][1][3])*presrand))/presfactor));
+
+return press;
 }
-//This determines how open a particular receiver is at a given time.
-function open(offplayerid,snaptime)
+alert('do it');
+var sumtime = 0;
+var ntime = 0;
+for (var ii=0;ii<100;ii++)
 {
-var defplayerid = offplayerid;
-var openfactor = 25;
-var openness[offplayerid] = snaptime*pow(2,(offplayer[offplayerid][1]-defplayer[defplayerid][1])/openfactor) 
+defensiveline[0] = [75,50,50,50,50];
+defplayer[0] = [0,defensiveline[0]];
+for (var i=0;i<150;i++)
+{
+pres = time(0,i/10.);
+if (pres>preslimit)
+{
+sumtime = sumtime+i/10;
+ntime = ntime+1;
+break;
 }
+}
+}
+alert(sumtime/ntime);
+
+alert('did it');
+//This determines how open a particular receiver is at a given time.
+
 </script>
 
 
