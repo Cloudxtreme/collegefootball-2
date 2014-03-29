@@ -43,6 +43,19 @@ defensivebacks[1] = [50,50,50,50,50];
 defensivebacks[2] = [50,50,50,50,50];
 defensivebacks[3] = [50,50,50,50,50];
 
+var offplayer = new Array();
+offplayer[0] = [0,offensiveline[0]];
+offplayer[1] = [0,offensiveline[1]];
+offplayer[2] = [0,offensiveline[2]];
+offplayer[3] = [0,offensiveline[3]];
+offplayer[4] = [0,offensiveline[4]];
+offplayer[5] = [1,qb[0]];
+offplayer[6] = [2,receivers[0]];
+offplayer[7] = [2,receivers[1]];
+offplayer[8] = [2,receivers[2]];
+offplayer[9] = [3,backs[0]];
+offplayer[10] = [4,tightends[0]];
+
 var defplayer = new Array();
 defplayer[0] = [0,defensiveline[0]];
 defplayer[1] = [0,defensiveline[1]];
@@ -64,11 +77,21 @@ var blitzers = [5]; //This is the defensive id of any blitzers.
 </script>
 
 <script>
-//This determines the amount of pressure the QB feels at any given time.
+//This determines the amount of pressure a defensive player places on the QB at a given time.
 var pressure = new Array();
+var openness = new Array();
 function time(defplayerid,snaptime)
 {
-var pressure[defplayerid] = snaptime*(defplayer[defplayerid][1]-offplayer[offplayerid][1])
+var offplayerid = defplayerid;
+var presfactor = 25;
+var pressure[defplayerid] = snaptime*pow(2,(defplayer[defplayerid][1]-offplayer[offplayerid][1])/presfactor)
+}
+//This determines how open a particular receiver is at a given time.
+function open(offplayerid,snaptime)
+{
+var defplayerid = offplayerid;
+var openfactor = 25;
+var openness[offplayerid] = snaptime*pow(2,(offplayer[offplayerid][1]-defplayer[defplayerid][1])/openfactor) 
 }
 </script>
 
